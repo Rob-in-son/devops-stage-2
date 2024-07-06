@@ -12,8 +12,8 @@ ENV PATH="/root/.local/bin:${PATH}"
 # Copy Poetry configuration files
 COPY poetry.lock pyproject.toml ./
 
-# Install dependencies (runtime only)
-RUN poetry install --no-dev
+# Install dependencies 
+RUN poetry install 
 
 # Copy the entire project
 COPY . .
