@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 
 # Set working directory
-WORKDIR /code
+WORKDIR /backend
 
 # Install curl and other necessary dependencies
 RUN apt-get update && apt-get install -y curl
