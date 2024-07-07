@@ -6,7 +6,9 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      - POSTGRES_SERVER=postgres
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
@@ -27,6 +29,16 @@ services:
       - ./backend/.env
     environment:
       - POSTGRES_SERVER=postgres
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - DOMAIN=${DOMAIN}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - PROJECT_NAME=${PROJECT_NAME}
+      - STACK_NAME=${STACK_NAME}
+      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
+      - SECRET_KEY=${SECRET_KEY}
+      - FIRST_SUPERUSER=${FIRST_SUPERUSER}
+      - FIRST_SUPERUSER_PASSWORD=${FIRST_SUPERUSER_PASSWORD}
+      - USERS_OPEN_REGISTRATION=${USERS_OPEN_REGISTRATION}
     depends_on:
       - postgres
     networks:
@@ -37,6 +49,8 @@ services:
     restart: unless-stopped
     env_file:
       - ./frontend/.env
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
     networks:
       - app-network
     depends_on:
