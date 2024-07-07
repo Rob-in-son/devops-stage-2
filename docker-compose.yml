@@ -3,12 +3,10 @@ services:
   postgres:
     image: postgres:13
     restart: unless-stopped
-    env_file:
-      - ./backend/.env
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=app
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=thepassword
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
@@ -25,20 +23,18 @@ services:
   backend:
     build: ./backend
     restart: unless-stopped
-    env_file:
-      - ./backend/.env
     environment:
       - POSTGRES_SERVER=postgres
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - DOMAIN=${DOMAIN}
-      - ENVIRONMENT=${ENVIRONMENT}
-      - PROJECT_NAME=${PROJECT_NAME}
-      - STACK_NAME=${STACK_NAME}
-      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
-      - SECRET_KEY=${SECRET_KEY}
-      - FIRST_SUPERUSER=${FIRST_SUPERUSER}
-      - FIRST_SUPERUSER_PASSWORD=${FIRST_SUPERUSER_PASSWORD}
-      - USERS_OPEN_REGISTRATION=${USERS_OPEN_REGISTRATION}
+      - POSTGRES_PORT=5432
+      - DOMAIN=localhost
+      - ENVIRONMENT=local
+      - PROJECT_NAME="Full Stack FastAPI Project"
+      - STACK_NAME=full-stack-fastapi-project
+      - BACKEND_CORS_ORIGINS="http://localhost,http://localhost:5173,https://localhost,https://localhost:5173"
+      - SECRET_KEY=changethis123
+      - FIRST_SUPERUSER=devops@hng.tech
+      - FIRST_SUPERUSER_PASSWORD=devops#HNG11
+      - USERS_OPEN_REGISTRATION=True
     depends_on:
       - postgres
     networks:
@@ -47,10 +43,8 @@ services:
   frontend:
     build: ./frontend
     restart: unless-stopped
-    env_file:
-      - ./frontend/.env
     environment:
-      - VITE_API_URL=${VITE_API_URL}
+      - VITE_API_URL=http://backend:8000
     networks:
       - app-network
     depends_on:
