@@ -25,5 +25,5 @@ COPY . .
 # Expose the port that the application will run on
 EXPOSE 8000
 
-# Run the prestart script and start the server
-CMD ["sh", "-c", "poetry run bash ./prestart.sh && poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
+# Command to run the application
+CMD ["poetry", "run", "bash", "./prestart.sh", "&&" ,"poetry", "run", "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
