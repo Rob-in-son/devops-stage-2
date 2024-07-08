@@ -1,32 +1,20 @@
-FROM python:3.11-slim
+# Use the latest official Python image as a base
+FROM python:latest
 
-# Set working directory
-WORKDIR /backend
+# Install Poetry using pip
+RUN pip install poetry uvicorn
 
-# Install curl and other necessary dependencies
-RUN apt-get update && apt-get install -y curl
+# Set the working directory
+WORKDIR /app
 
-# Install Poetry and add it to PATH in the same layer
-RUN curl -sSL https://install.python-poetry.org | python3 - && \
-    echo 'export PATH="/root/.local/bin:$PATH"' >> ~/.bashrc
-
-# Load the updated PATH
-ENV PATH="/root/.local/bin:${PATH}"
-
-# Copy Poetry configuration files
-COPY poetry.lock pyproject.toml ./
-
-# Install dependencies 
-RUN poetry install 
-
-# Copy the entire project
+# Copy the application files
 COPY . .
 
-#Grant permissions
-RUN chmod +x ./prestart.sh
+# Install dependencies using Poetry
+RUN poetry install
 
-# Expose the port that the application will run on
-EXPOSE 8000
+# Expose the port FastAPI runs on
+EXPOSE 80
 
-# Run the prestart script and start the server (modified)
-CMD ["sh", "-c", "poetry run ./prestart.sh; poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
+# Run the prestart script and start the server
+CMD ["sh", "-c", "poetry run bash ./prestart.sh && poetry run uvicorn app.main:app --host 0.0.0.0 --port 80 --reload"]
