@@ -22,6 +22,9 @@ RUN poetry install
 # Copy the entire project
 COPY . .
 
+#Grant permissions
+RUN chmod +x ./prestart.sh
+
 # Expose the port that the application will run on
 EXPOSE 8000
 
