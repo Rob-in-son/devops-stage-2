@@ -47,7 +47,7 @@ services:
     build: ./frontend
     restart: always
     environment:
-      - VITE_API_URL=http://robinsonuche.online
+      - VITE_API_URL=https://robinsonuche.online
     networks:
       - app-network
     depends_on:
