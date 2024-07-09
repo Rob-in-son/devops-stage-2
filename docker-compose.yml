@@ -53,7 +53,7 @@ services:
     depends_on:
       - backend
 
-  nginx-proxy-manager:
+  proxy:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: always
     ports:
