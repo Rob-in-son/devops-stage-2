@@ -12,6 +12,15 @@ services:
     networks:
       - app-network
 
+  nginx:
+    build:
+        context: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+
   adminer:
     image: adminer
     restart: always
@@ -47,7 +56,7 @@ services:
     build: ./frontend
     restart: always
     environment:
-      - VITE_API_URL=https://robinsonuche.online
+      - VITE_API_URL=http://frontend:5173
     networks:
       - app-network
     depends_on:
@@ -57,7 +66,7 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: always
     ports:
-      - '80:80'
+      #- '80:80'
       - '443:443'
       - '8090:81'
     volumes:
