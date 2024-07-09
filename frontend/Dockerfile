@@ -12,7 +12,7 @@ ENV NODE_ENV=local
 ENV NODE_OPTIONS=--max-old-space-size=1536
 
 # Set the working directory for the application within the container
-WORKDIR /frontend
+WORKDIR /app
 
 # Copy the package.json file to the working directory
 COPY package.json .
