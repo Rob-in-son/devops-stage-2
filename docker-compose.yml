@@ -2,7 +2,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:13
-    restart: unless-stopped
+    restart: always
     environment:
       - POSTGRES_DB=app
       - POSTGRES_USER=app
@@ -14,7 +14,7 @@ services:
 
   adminer:
     image: adminer
-    restart: unless-stopped
+    restart: always
     ports:
       - "8080:8080"
     networks:
@@ -22,7 +22,7 @@ services:
 
   backend:
     build: ./backend
-    restart: unless-stopped
+    restart: always
     environment:
       - POSTGRES_SERVER=postgres
       - POSTGRES_PORT=5432
@@ -45,7 +45,7 @@ services:
 
   frontend:
     build: ./frontend
-    restart: unless-stopped
+    restart: always
     environment:
       - VITE_API_URL=http://robinsonuche.online
     networks:
@@ -55,7 +55,7 @@ services:
 
   nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
+    restart: always
     ports:
       - '80:80'
       - '443:443'
