@@ -20,6 +20,8 @@ services:
     depends_on:
       - frontend
       - backend
+    networks:
+      - app-network
 
   adminer:
     image: adminer
@@ -58,7 +60,7 @@ services:
     environment:
       - VITE_API_URL=http://frontend:5173
     networks:
-      - app-network
+      - app-network 
     depends_on:
       - backend
 
